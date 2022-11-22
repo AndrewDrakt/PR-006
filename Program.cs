@@ -8,6 +8,7 @@ namespace Практ6
 {
     internal class Program
     {
+      
         static void Main()
         {
             Fele subject = new Fele();
@@ -36,76 +37,48 @@ namespace Практ6
                     Console.Clear();
                     Console.WriteLine("Введите название файла(вместе с расширением), куда Вы хотите сохранить файл.");
                     string way = Console.ReadLine();
-                    if (File.Exists(way))
-                    {
-
                         if (way.Contains("xml"))
                         {
-                            XmlSerializer xml = new XmlSerializer(typeof(Fele));
-                            using (FileStream dd = new FileStream(way, FileMode.OpenOrCreate))
+                            if (put.Contains("txt"))
                             {
-                                xml.Serialize(dd, subject);
+                            SerializeriDeserializer.SerializeXML(subject, way);
+                            }
+                            else
+                            {
+                            SerializeriDeserializer.ЖысонДириализе(put);
+                            SerializeriDeserializer.SerializeXML(subject, way);
                             }
                         }
                         else if (way.Contains("json"))
                         {
-                            string json = JsonConvert.SerializeObject(subject);
-                            File.WriteAllText(way, json);
-                        }
-                        else if (put.Contains("txt"))
-                        {
-                            string text = File.ReadAllText(put);
-                            List<Fele> tekst = JsonConvert.DeserializeObject<List<Fele>>(text);
-                            Fele vivod;
-                            XmlSerializer xml = new XmlSerializer(typeof(Fele));
-                            using (FileStream dd = new FileStream(put, FileMode.Open))
+                            if (put.Contains("txt"))
                             {
-                                vivod = (Fele)xml.Deserialize(dd);
+                            SerializeriDeserializer.SerialJson(subject, way);
                             }
-                        }
-                    }
-                    else
-                    {
-                        File.Create(way);
-                        if (way.Contains("xml"))
-                        {
-                            XmlSerializer xml = new XmlSerializer(typeof(Fele));
-                            using (FileStream dd = new FileStream(way, FileMode.Create))
+                            else
                             {
-                                xml.Serialize(dd, subject);
+                            SerializeriDeserializer.Deserialize(way);
+                            SerializeriDeserializer.SerialJson(subject, way);
                             }
-                        }
-                        else if (way.Contains("json"))
-                        {
-                            string json = JsonConvert.SerializeObject(subject);
-                            File.WriteAllText(way, json);
                         }
                         else if (way.Contains("txt"))
                         {
                             if (put.Contains("xml"))
                             {
-                                Fele vivod;
-                                XmlSerializer xml = new XmlSerializer(typeof(Fele));
-                                using (FileStream dd = new FileStream(put, FileMode.Open))
-                                {
-                                    vivod = (Fele)xml.Deserialize(dd);
-                                }
+                            SerializeriDeserializer.Deserialize(way);
                             }
                             else if (put.Contains("json"))
                             {
-                                string text = File.ReadAllText(put);
-                                List<Fele> tekst = JsonConvert.DeserializeObject<List<Fele>>(text);
+                            SerializeriDeserializer.ЖысонДириализе(put);
                             }
                         }
-
-                    }
                 }
                 else if (com.Key == ConsoleKey.Escape)
                 {
                     Console.Clear();
-                    Console.WriteLine("Завершение программы.");
+                    Console.WriteLine(" Завершение программы.");
+                }
                 }
             }
         }
     }
-}
